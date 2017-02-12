@@ -1,11 +1,11 @@
 import React from 'react';
+import classnames from 'classnames';
 
-const Button = props => (
-  <button type="button" onClick={() => props.onClick()} className={props.className}>
-    <p>{props.children}</p>
+export default ({children, onClick, className}) => (
+  <button
+    type="button" onClick={() => onClick()}
+    className={classnames('toastr-button', className)}
+  >
+    {children}
   </button>
 );
-
-Button.displayName = 'ReduxConfirmButton';
-
-export default Button;
