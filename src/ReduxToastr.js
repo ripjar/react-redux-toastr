@@ -6,7 +6,7 @@ import ToastrConfirm from './ToastrConfirm';
 import * as actions from './actions';
 import {EE} from './toastrEmitter';
 import config from './config';
-import {updateConfig, _bind} from './utils';
+import {updateConfig, _bind, isMobile} from './utils';
 
 class ReduxToastr extends Component {
   static displayName = 'ReduxToastr';
@@ -94,7 +94,14 @@ class ReduxToastr extends Component {
 
   render() {
     return (
-      <div className={cn('redux-toastr', this.props.position, this.props.className)}>
+      <div
+        className={cn(
+          'redux-toastr',
+          this.props.position,
+          this.props.className, {
+            'toastr-mobile': isMobile()
+          }
+        )}>
         {this.props.toastr.confirm &&
           <ToastrConfirm
             key={this.props.toastr.confirm.id}
