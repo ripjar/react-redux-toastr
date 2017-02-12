@@ -93,3 +93,10 @@ export function _bind(strinOrAray, scope) {
   }
   return array.map(item=> scope[item] = scope[item].bind(scope));
 }
+
+export const isBrowser = () => {
+  if (typeof document !== 'undefined') return true;
+  return false;
+};
+
+export const isMobile = () => isBrowser() && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

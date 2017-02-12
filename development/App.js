@@ -20,9 +20,7 @@ export default class App extends Component {
     return (
       <Provider store={this.props.store}>
         <div className="wrapper">
-          <ReduxToastr
-            preventDuplicates={true}
-          />
+          <ReduxToastr preventDuplicates={true}/>
           <Menu />
         </div>
       </Provider>

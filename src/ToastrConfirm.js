@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import CSSCore from 'fbjs/lib/CSSCore';
-import {onCSSTransitionEnd, _bind, keyCode} from './utils';
+import {onCSSTransitionEnd, _bind, keyCode, isBrowser} from './utils';
 import Button from './Button';
 
 const ENTER = 13;
@@ -27,8 +27,15 @@ class ToastrConfirm extends Component {
     this.transitionIn = transitionIn || confirmOptions.transitionIn;
     this.transitionOut = transitionOut || confirmOptions.transitionOut;
     this.disableCancel = (disableCancel != null) ? disableCancel : confirmOptions.disableCancel;
-    _bind('setTransition removeConfirm handleOnKeyUp handleOnKeyDown', this);
+
     this.isKeyDown = false;
+    this.documentBody;
+
+    if (isBrowser()) {
+      this.documentBody = document.querySelector('body');
+    }
+
+    _bind('setTransition removeConfirm handleOnKeyUp handleOnKeyDown', this);
   }
 
   componentDidMount() {
@@ -81,11 +88,9 @@ class ToastrConfirm extends Component {
   }
 
   setTransition(add) {
-    const body = document.querySelector('body');
-
     if (add) {
       this.isHiding = false;
-      CSSCore.addClass(body, 'toastr-confirm-active');
+      CSSCore.addClass(this.documentBody, 'toastr-confirm-active');
       CSSCore.addClass(this.confirm, this.transitionIn);
       return;
     }
@@ -97,8 +102,7 @@ class ToastrConfirm extends Component {
   removeConfirm() {
     this.isHiding = false;
     this.props.hideConfirm();
-    const body = document.querySelector('body');
-    CSSCore.removeClass(body, 'toastr-confirm-active');
+    CSSCore.removeClass(this.documentBody, 'toastr-confirm-active');
   }
 
   handleOnKeyUp(e) {
