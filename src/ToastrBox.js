@@ -265,20 +265,20 @@ export default class ToastrBox extends React.Component {
   }
 
   _setTransition(hide) {
-    const animationType = hide ? this.transitionOut : this.transitionIn;
+    const animationType = hide ? this.transitionOut : this.transitionIn
 
     const onEndListener = (e) => {
       if (e && e.target == this.toastrBoxElement) {
-        this.toastrBoxElement.classList.remove(animationType);
+        this.toastrBoxElement.classList.remove(styles[animationType]);
       }
     };
 
     onCSSTransitionEnd(this.toastrBoxElement, onEndListener);
-    this.toastrBoxElement.classList.add(animationType);
+    this.toastrBoxElement.classList.add(styles[animationType]);
   }
 
   _clearTransition() {
-    this.toastrBoxElement.classList.remove(this.transitionIn, this.transitionOut);
+    this.toastrBoxElement.classList.remove(styles[this.transitionIn], styles[this.transitionOut]);
   }
 
   _setIntervalId(intervalId) {
