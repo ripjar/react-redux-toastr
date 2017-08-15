@@ -1,6 +1,8 @@
-$toastr-width: 350px !default;
-$successBgColor: #60bb71 !default;
-$infoBgColor: #58abc3 !default;
-$warningBgColor: #f7a336 !default;
-$errorBgColor: #db6a64 !default;
-$defaultSpace: 10px;
+@import "~react-component-library/styles/variables";
+
+$toastr-width: 450px !default;
+$successBgColor: $success !default;
+$infoBgColor: $silver !default;
+$warningBgColor: $silver !default;
+$errorBgColor: $danger !default;
+$defaultSpace: $margin-small;

@@ -6,6 +6,8 @@ import Icon from './Icon';
 
 import {onCSSTransitionEnd, _bind} from './utils';
 
+import styles from "./styles/index.scss";
+
 export default class ToastrBox extends React.Component {
   static displayName = 'ToastrBox';
 
@@ -148,7 +150,9 @@ export default class ToastrBox extends React.Component {
     } = this.props.item;
 
     if (isValidElement(options.icon)) {
-      return React.cloneElement(options.icon);
+      return React.cloneElement(options.icon, {
+        className: styles.toastrIcon
+      });
     }
 
     const iconName = (type === 'light') ? options.icon : type;
@@ -159,7 +163,7 @@ export default class ToastrBox extends React.Component {
     return (
       <button
         type="button"
-        className="close-toastr"
+        className={styles.closeToastr}
         onClick={this.handleClick.bind(this)}
       >
         &#x2715;
@@ -176,20 +180,20 @@ export default class ToastrBox extends React.Component {
     } = this.props.item;
 
     return (
-      <div>
-        <div className="rrt-left-container">
-          <div className="rrt-holder">
+      <div className={styles.rrtContainer}>
+        <div className={styles.rrtLeftContainer}>
+          <div className={styles.rrtHolder}>
             {this.renderIcon()}
           </div>
         </div>
-        {options.status && type === 'light' && <div className={classnames('toastr-status', options.status)}/>}
-        <div className="rrt-middle-container">
-          {title && <div className="rrt-title">{title}</div>}
-          {message && <div className="rrt-text">{message}</div>}
+        {options.status && type === 'light' && <div className={classnames(styles.toastrStatus, options.status)}/>}
+        <div className={styles.rrtMiddleContainer}>
+          {title && <div className={styles.rrtTitle}>{title}</div>}
+          {message && <div className={styles.rrtMessage}>{message}</div>}
           {options.component && this.renderSubComponent()}
         </div>
 
-        <div className="rrt-right-container">
+        <div className={styles.rrtRightContainer}>
           {options.showCloseButton && this.renderCloseButton()}
         </div>
         {this.state.progressBar ? <ProgressBar {...this.state.progressBar}/> : null}
@@ -206,11 +210,11 @@ export default class ToastrBox extends React.Component {
 
     return (
       <div>
-        <div className="rrt-title">
+        <div className={styles.rrtTitle}>
           {title}
           {this.renderCloseButton()}
         </div>
-        <div className="rrt-text">
+        <div className={styles.rrtText}>
           {message}
           {options.component && this.renderSubComponent()}
         </div>
@@ -299,9 +303,9 @@ export default class ToastrBox extends React.Component {
       <div
         ref={(ref) => this.toastrBoxElement = ref}
         className={classnames(
-          'toastr',
-          'animated',
-          'rrt-' + type,
+          styles.toastr,
+          styles.animated,
+          styles[`rrt-${type}`],
           options.className
         )}
         onMouseEnter={this.mouseEnter.bind(this)}

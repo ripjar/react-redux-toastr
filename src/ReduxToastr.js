@@ -9,6 +9,8 @@ import {EE} from './toastrEmitter';
 import {updateConfig} from './utils';
 import {TRANSITIONS} from './constants';
 
+import styles from "./styles/index.scss";
+
 export class ReduxToastr extends React.Component {
   static displayName = 'ReduxToastr';
 
@@ -25,7 +27,7 @@ export class ReduxToastr extends React.Component {
   };
 
   static defaultProps = {
-    position: 'top-right',
+    position: 'topRight',
     newestOnTop: true,
     timeOut: 5000,
     progressBar: false,
@@ -41,12 +43,12 @@ export class ReduxToastr extends React.Component {
   toastrFired = {};
 
   toastrPositions = [
-    'top-left',
-    'top-right',
-    'top-center',
-    'bottom-left',
-    'bottom-right',
-    'bottom-center'
+    'topLeft',
+    'topRight',
+    'topCenter',
+    'bottomLeft',
+    'bottomRight',
+    'bottomCenter'
   ];
 
   constructor(props) {
@@ -92,7 +94,7 @@ export class ReduxToastr extends React.Component {
           };
 
           return (
-            <span key={item.id}>
+            <div className={styles.toastrForPosition} key={item.id}>
               <ToastrBox
                 inMemory={this.toastrFired}
                 addToMemory={() => this._addToMemory(item.id)}
@@ -100,9 +102,9 @@ export class ReduxToastr extends React.Component {
                 {...this.props}
               />
               {item.options && item.options.attention &&
-                <div onClick={() => this.props.remove(item.id)} className="toastr-attention" />
+                <div onClick={() => this.props.remove(item.id)} className={styles.toastrAttention} />
               }
-            </span>
+            </div>
           );
         });
     }
@@ -113,22 +115,22 @@ export class ReduxToastr extends React.Component {
     const width = toastr.toastrs && toastr.toastrs[0] && toastr.toastrs[0].options && toastr.toastrs[0].options.width;
     const style = width ? {width: width} : {};
     return (
-      <span>
+      <div className={styles.toastrsContainer}>
         {this.toastrPositions.map(position => {
           return (
-            <div key={position} className={position} style={style}>
+            <div key={position} className={styles[position]} style={style}>
               {this._renderToastrForPosition(position)}
             </div>
           );
         })}
-      </span>
+      </div>
     );
   }
 
   render() {
     const {className, toastr} = this.props;
     return (
-      <span className={cn('redux-toastr', className)} aria-live="assertive">
+      <span className={cn(styles.reduxToastr, className)} aria-live="assertive">
         {toastr.confirm &&
           <ToastrConfirm
             confirm={toastr.confirm}
